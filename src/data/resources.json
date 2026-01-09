@@ -1,9 +1,28 @@
 {
   "meta": {
     "dateRange": "2026-01-01-ongoing",
-    "resourceCount": 0,
-    "tagCount": 0,
-    "lastSync": null
+    "resourceCount": 2,
+    "tagCount": 4,
+    "lastSync": "2026-01-09"
   },
-  "resources": []
+  "resources": [
+    {
+      "id": "1",
+      "title": "Markov blankets and Bayesian mechanics",
+      "type": "video",
+      "url": "https://www.youtube.com/watch?v=j53lfLyFOPA",
+      "dateAdded": "2026-01-09",
+      "summary": "",
+      "tags": ["biology/neuroscience", "mathematics"]
+    },
+    {
+      "id": "2",
+      "title": "Occam's Razor and the Universal Prior",
+      "type": "bookmark",
+      "url": "https://www.lesswrong.com/posts/RKfg86eKQuqLnjGxx/occam-s-razor-and-the-universal-prior",
+      "dateAdded": "2026-01-09",
+      "summary": "",
+      "tags": ["ai/machine_learning", "cs/theory"]
+    }
+  ]
 }
