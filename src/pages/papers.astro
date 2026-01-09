@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import resourcesData from '../data/resources.json';
+
+const { resources } = resourcesData;
+
+const papers = resources
+  .filter(r => r.type === 'paper')
+  .sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime());
+---
+
+<BaseLayout title="Papers - synechism">
+  <h1>Papers</h1>
+
+  <p class="intro-text">
+    Academic papers and research I've read or collected.
+  </p>
+
+  {papers.length > 0 ? (
+    <div class="papers-list">
+      {papers.map(paper => (
+        <ResourceCard resource={paper} />
+      ))}
+    </div>
+  ) : (
+    <section class="empty-state">
+      <p>No papers collected yet. Check back later.</p>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  .intro-text {
+    color: var(--fg-muted);
+    margin-bottom: 2rem;
+  }
+
+  .papers-list {
+    max-width: 800px;
+  }
+</style>

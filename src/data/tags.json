@@ -1,0 +1,35 @@
+{
+  "tags": [
+    {
+      "name": "ai",
+      "children": [
+        { "name": "machine_learning", "children": [] },
+        { "name": "nlp", "children": [] },
+        { "name": "computer_vision", "children": [] }
+      ]
+    },
+    {
+      "name": "biology",
+      "children": [
+        { "name": "neuroscience", "children": [] },
+        { "name": "genetics", "children": [] }
+      ]
+    },
+    {
+      "name": "cs",
+      "children": [
+        { "name": "systems", "children": [] },
+        { "name": "theory", "children": [] },
+        { "name": "programming_languages", "children": [] }
+      ]
+    },
+    {
+      "name": "mathematics",
+      "children": [
+        { "name": "algebra", "children": [] },
+        { "name": "analysis", "children": [] },
+        { "name": "topology", "children": [] }
+      ]
+    }
+  ]
+}

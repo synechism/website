@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TagTree from '../components/TagTree.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import Search from '../components/Search.astro';
+
+import resourcesData from '../data/resources.json';
+import tagsData from '../data/tags.json';
+
+const { meta, resources } = resourcesData;
+const { tags } = tagsData;
+
+// Get recent bookmarks and videos
+const recentBookmarks = resources
+  .filter(r => r.type === 'bookmark')
+  .sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
+  .slice(0, 5);
+
+const recentVideos = resources
+  .filter(r => r.type === 'video')
+  .sort((a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime())
+  .slice(0, 5);
+
+const hasResources = resources.length > 0;
+const hasTags = tags.length > 0;
+---
+
+<BaseLayout title="synechism">
+  <div class="stats">
+    <span>{meta.dateRange}</span>
+    <span>resources: <span>{meta.resourceCount}</span></span>
+    <span>tags: <span>{meta.tagCount}</span></span>
+    {meta.lastSync && <span>last sync: <span>{meta.lastSync}</span></span>}
+  </div>
+
+  <section class="intro">
+    <p>
+      A collection of bookmarks, videos, and papers I've gathered since January 2026.
+      Idea shamelessly stolen from <a href="https://ludwigabap.com/resources">Ludwig</a>.
+    </p>
+  </section>
+
+  <Search resources={resources} />
+
+  <div class="filter-bar">
+    <div class="filter-group">
+      <button class="filter-btn active" data-view="categories">Categories</button>
+      <button class="filter-btn" data-view="timeline">Timeline</button>
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="bookmark">Bookmarks</button>
+      <button class="filter-btn" data-filter="video">Videos</button>
+    </div>
+  </div>
+
+  {hasResources || hasTags ? (
+    <>
+      {hasTags && (
+        <section class="tag-tree" id="tag-tree">
+          <TagTree tags={tags} resources={resources} />
+        </section>
+      )}
+
+      {hasResources && (
+        <section class="resources-grid">
+          <div class="resource-section">
+            <h2>Recent Bookmarks</h2>
+            {recentBookmarks.length > 0 ? (
+              recentBookmarks.map(resource => (
+                <ResourceCard resource={resource} />
+              ))
+            ) : (
+              <p class="empty-note">No bookmarks yet.</p>
+            )}
+          </div>
+
+          <div class="resource-section">
+            <h2>Recent Videos</h2>
+            {recentVideos.length > 0 ? (
+              recentVideos.map(resource => (
+                <ResourceCard resource={resource} />
+              ))
+            ) : (
+              <p class="empty-note">No videos yet.</p>
+            )}
+          </div>
+        </section>
+      )}
+    </>
+  ) : (
+    <section class="empty-state">
+      <h2>No resources yet</h2>
+      <p>Start adding bookmarks, videos, and papers to populate your digital garden.</p>
+      <p>Resources can be added to the <code>src/data/resources.json</code> file.</p>
+    </section>
+  )}
+
+  <footer class="footer-links">
+    <a href="/about">About this site</a>
+    <a href="/api/resources.json">Export as JSON</a>
+  </footer>
+</BaseLayout>
+
+<style>
+  .empty-note {
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+
+  code {
+    background: var(--bg-card);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+  }
+</style>
+
+<script>
+  // Tag tree expand/collapse
+  document.querySelectorAll('.tag-expand').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tagPath = btn.getAttribute('data-tag');
+      const children = document.querySelector(`[data-children="${tagPath}"]`);
+      if (children) {
+        children.classList.toggle('expanded');
+        btn.textContent = children.classList.contains('expanded') ? '[-]' : '[+]';
+      }
+    });
+  });
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.parentElement;
+      group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>

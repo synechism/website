@@ -1,0 +1,92 @@
+---
+interface Tag {
+  name: string;
+  children: Tag[];
+}
+
+interface Props {
+  tags: Tag[];
+  resources: any[];
+  prefix?: string;
+}
+
+const { tags, resources, prefix = '' } = Astro.props;
+
+function countResources(tagPath: string, resources: any[]): number {
+  return resources.filter(r =>
+    r.tags.some((t: string) => t === tagPath || t.startsWith(tagPath + '/'))
+  ).length;
+}
+
+function hasChildren(tag: Tag): boolean {
+  return tag.children && tag.children.length > 0;
+}
+---
+
+<ul class="tag-list">
+  {tags.map((tag) => {
+    const fullPath = prefix ? `${prefix}/${tag.name}` : tag.name;
+    const count = countResources(fullPath, resources);
+    const hasKids = hasChildren(tag);
+
+    return (
+      <li class="tag-item">
+        <a href={`/tags/${fullPath}`} class="tag-name">{tag.name}</a>
+        <span class="tag-count">({count})</span>
+        {hasKids && (
+          <span class="tag-expand" data-tag={fullPath}>[+]</span>
+        )}
+        {hasKids && (
+          <div class="tag-children" data-children={fullPath}>
+            <Astro.self tags={tag.children} resources={resources} prefix={fullPath} />
+          </div>
+        )}
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tag-item {
+    margin: 0.3rem 0;
+  }
+
+  .tag-name {
+    color: var(--accent);
+  }
+
+  .tag-name:hover {
+    text-decoration: underline;
+  }
+
+  .tag-count {
+    color: var(--fg-muted);
+    margin-left: 0.25rem;
+  }
+
+  .tag-expand {
+    color: var(--fg-muted);
+    margin-left: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .tag-expand:hover {
+    color: var(--accent);
+  }
+
+  .tag-children {
+    margin-left: 1.5rem;
+    display: none;
+  }
+
+  .tag-children.expanded {
+    display: block;
+  }
+</style>

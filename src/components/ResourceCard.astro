@@ -1,0 +1,100 @@
+---
+interface Props {
+  resource: {
+    id: string;
+    title: string;
+    type: 'bookmark' | 'video' | 'paper';
+    url: string;
+    dateAdded: string;
+    summary?: string;
+    tags: string[];
+  };
+}
+
+const { resource } = Astro.props;
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+---
+
+<article class="resource-card">
+  <h3 class="resource-title">
+    <a href={resource.url} target="_blank" rel="noopener noreferrer">
+      {resource.title}
+    </a>
+  </h3>
+  <div class="resource-meta">
+    <span class="resource-type">{resource.type}</span>
+    <span class="separator">·</span>
+    <span class="resource-date">Added on {formatDate(resource.dateAdded)}</span>
+  </div>
+  {resource.summary && (
+    <p class="resource-summary">{resource.summary}</p>
+  )}
+  <div class="resource-tags">
+    {resource.tags.map((tag) => (
+      <a href={`/tags/${tag}`} class="resource-tag">{tag}</a>
+    ))}
+  </div>
+</article>
+
+<style>
+  .resource-card {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--bg-card);
+  }
+
+  .resource-card:last-child {
+    border-bottom: none;
+  }
+
+  .resource-title {
+    font-size: 1.1rem;
+    font-weight: normal;
+    margin-bottom: 0.25rem;
+  }
+
+  .resource-title a {
+    color: var(--accent);
+  }
+
+  .resource-meta {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    font-family: monospace;
+    margin-bottom: 0.5rem;
+  }
+
+  .separator {
+    margin: 0 0.25rem;
+  }
+
+  .resource-summary {
+    font-size: 0.95rem;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .resource-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .resource-tag {
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+
+  .resource-tag:hover {
+    text-decoration: underline;
+  }
+</style>

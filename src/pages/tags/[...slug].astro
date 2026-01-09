@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import resourcesData from '../../data/resources.json';
+import tagsData from '../../data/tags.json';
+
+export async function getStaticPaths() {
+  const { resources } = resourcesData;
+
+  // Extract all unique tag paths from resources
+  const allTagPaths = new Set<string>();
+
+  resources.forEach(resource => {
+    resource.tags.forEach((tag: string) => {
+      // Add the full tag path
+      allTagPaths.add(tag);
+
+      // Also add all parent paths
+      const parts = tag.split('/');
+      for (let i = 1; i < parts.length; i++) {
+        allTagPaths.add(parts.slice(0, i).join('/'));
+      }
+    });
+  });
+
+  // Also add tags from the tag tree
+  function extractTagPaths(tags: any[], prefix = ''): string[] {
+    const paths: string[] = [];
+    for (const tag of tags) {
+      const fullPath = prefix ? `${prefix}/${tag.name}` : tag.name;
+      paths.push(fullPath);
+      if (tag.children && tag.children.length > 0) {
+        paths.push(...extractTagPaths(tag.children, fullPath));
+      }
+    }
+    return paths;
+  }
+
+  extractTagPaths(tagsData.tags).forEach(path => allTagPaths.add(path));
+
+  return Array.from(allTagPaths).map(tagPath => ({
+    params: { slug: tagPath },
+    props: { tagPath }
+  }));
+}
+
+interface Props {
+  tagPath: string;
+}
+
+const { tagPath } = Astro.props;
+const { resources } = resourcesData;
+
+// Get resources that match this tag or any child tag
+const matchingResources = resources.filter(r =>
+  r.tags.some((t: string) => t === tagPath || t.startsWith(tagPath + '/'))
+);
+
+// Sort by date
+const sortedResources = matchingResources.sort(
+  (a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+);
+
+// Get child tags (immediate children only)
+const childTags = new Set<string>();
+resources.forEach(r => {
+  r.tags.forEach((t: string) => {
+    if (t.startsWith(tagPath + '/')) {
+      const remainder = t.slice(tagPath.length + 1);
+      const nextPart = remainder.split('/')[0];
+      if (nextPart) {
+        childTags.add(nextPart);
+      }
+    }
+  });
+});
+
+// Breadcrumb parts
+const parts = tagPath.split('/');
+const breadcrumbs = parts.map((part, i) => ({
+  name: part,
+  path: parts.slice(0, i + 1).join('/')
+}));
+
+// Get display name (last part of path)
+const displayName = parts[parts.length - 1];
+---
+
+<BaseLayout title={`${displayName} - Tags`}>
+  <nav class="breadcrumbs">
+    <a href="/">Home</a>
+    {breadcrumbs.map((crumb, i) => (
+      <>
+        <span class="separator">/</span>
+        {i === breadcrumbs.length - 1 ? (
+          <span class="current">{crumb.name}</span>
+        ) : (
+          <a href={`/tags/${crumb.path}`}>{crumb.name}</a>
+        )}
+      </>
+    ))}
+  </nav>
+
+  <h1>{displayName.replace(/_/g, ' ')}</h1>
+
+  <p class="tag-stats">
+    {sortedResources.length} resource{sortedResources.length !== 1 ? 's' : ''}
+  </p>
+
+  {Array.from(childTags).length > 0 && (
+    <section class="child-tags">
+      <h2>Subtopics</h2>
+      <ul class="child-tag-list">
+        {Array.from(childTags).sort().map(child => {
+          const childPath = `${tagPath}/${child}`;
+          const childCount = resources.filter(r =>
+            r.tags.some((t: string) => t === childPath || t.startsWith(childPath + '/'))
+          ).length;
+          return (
+            <li>
+              <a href={`/tags/${childPath}`}>{child.replace(/_/g, ' ')}</a>
+              <span class="count">({childCount})</span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )}
+
+  {sortedResources.length > 0 ? (
+    <section class="tag-resources">
+      <h2>Resources</h2>
+      {sortedResources.map(resource => (
+        <ResourceCard resource={resource} />
+      ))}
+    </section>
+  ) : (
+    <section class="empty-state">
+      <p>No resources with this tag yet.</p>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: var(--fg-muted);
+  }
+
+  .breadcrumbs a {
+    color: var(--accent);
+  }
+
+  .breadcrumbs .separator {
+    margin: 0 0.5rem;
+  }
+
+  .breadcrumbs .current {
+    color: var(--fg);
+  }
+
+  h1 {
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-stats {
+    color: var(--fg-muted);
+    margin-bottom: 2rem;
+  }
+
+  .child-tags {
+    margin-bottom: 2rem;
+  }
+
+  .child-tags h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .child-tag-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .child-tag-list a {
+    color: var(--accent);
+  }
+
+  .child-tag-list .count {
+    color: var(--fg-muted);
+    margin-left: 0.25rem;
+  }
+
+  .tag-resources h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .tag-resources {
+    max-width: 800px;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About - synechism">
+  <article class="about-content">
+    <h1>About</h1>
+
+    <p>
+      This website is my personal "forever home" on the Internet. It contains my bookmarks,
+      videos, and papers I've collected, along with my writings and other things I find interesting.
+    </p>
+
+    <h2>The System</h2>
+
+    <p>
+      Resources are organized using a hierarchical tag system inspired by Wikipedia's category structure.
+      Going down one level in the tag tree means zooming into a narrower domain within a field.
+    </p>
+
+    <p>
+      The classification pipeline uses a combination of tools to automatically categorize resources
+      and maintain the health of the tag tree (pruning, merging, splitting tags as needed).
+    </p>
+
+    <h2>Why?</h2>
+
+    <p>
+      Much of the point is personal: I'm interested in durably saving my various "arcs" and adventures
+      in figuring out what interests me most, and letting this grow over decades.
+    </p>
+
+    <p>
+      Over time, I intend to build out more features like research trail visualizations,
+      timeline views, and automatic publishing of notes.
+    </p>
+
+    <h2>Technical Details</h2>
+
+    <ul>
+      <li>Built with <a href="https://astro.build">Astro</a></li>
+      <li>Hosted on GitHub Pages</li>
+      <li>Gruvbox-inspired color scheme</li>
+    </ul>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .about-content h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-content ul {
+    margin-left: 1.5rem;
+    color: var(--fg-muted);
+  }
+
+  .about-content li {
+    margin-bottom: 0.5rem;
+  }
+</style>

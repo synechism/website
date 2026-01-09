@@ -1,0 +1,202 @@
+---
+interface Resource {
+  id: string;
+  title: string;
+  type: string;
+  url: string;
+  dateAdded: string;
+  summary?: string;
+  tags: string[];
+}
+
+interface Props {
+  resources: Resource[];
+}
+
+const { resources } = Astro.props;
+---
+
+<div class="search-container">
+  <input
+    type="text"
+    class="search-input"
+    id="search-input"
+    placeholder="Search by title, summary, or tags..."
+    autocomplete="off"
+  />
+  <div class="search-results" id="search-results"></div>
+</div>
+
+<script define:vars={{ resources }}>
+  // Import Fuse.js dynamically for client-side search
+  import('https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.mjs').then(({ default: Fuse }) => {
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    if (!searchInput || !searchResults) return;
+
+    const fuse = new Fuse(resources, {
+      keys: [
+        { name: 'title', weight: 0.4 },
+        { name: 'summary', weight: 0.3 },
+        { name: 'tags', weight: 0.3 }
+      ],
+      threshold: 0.4,
+      includeScore: true
+    });
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+
+    function renderResults(results) {
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+        searchResults.classList.add('visible');
+        return;
+      }
+
+      const html = results.slice(0, 10).map(({ item }) => `
+        <a href="${item.url}" class="search-result" target="_blank" rel="noopener">
+          <div class="result-title">${item.title}</div>
+          <div class="result-meta">
+            <span class="result-type">${item.type}</span>
+            <span class="result-date">${formatDate(item.dateAdded)}</span>
+          </div>
+          ${item.tags.length > 0 ? `
+            <div class="result-tags">${item.tags.join(' / ')}</div>
+          ` : ''}
+        </a>
+      `).join('');
+
+      searchResults.innerHTML = html;
+      searchResults.classList.add('visible');
+    }
+
+    function clearResults() {
+      searchResults.innerHTML = '';
+      searchResults.classList.remove('visible');
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+
+      if (query.length < 2) {
+        clearResults();
+        return;
+      }
+
+      const results = fuse.search(query);
+      renderResults(results);
+    });
+
+    searchInput.addEventListener('blur', () => {
+      // Delay to allow clicking results
+      setTimeout(clearResults, 200);
+    });
+
+    searchInput.addEventListener('focus', () => {
+      const query = searchInput.value.trim();
+      if (query.length >= 2) {
+        const results = fuse.search(query);
+        renderResults(results);
+      }
+    });
+  });
+</script>
+
+<style>
+  .search-container {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: var(--bg-card);
+    border: 1px solid var(--bg-soft);
+    color: var(--fg);
+    border-radius: 4px;
+  }
+
+  .search-input::placeholder {
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--bg-soft);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+  }
+
+  .search-results.visible {
+    display: block;
+  }
+
+  .search-result {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--bg-soft);
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .search-result:last-child {
+    border-bottom: none;
+  }
+
+  .search-result:hover {
+    background: var(--bg-soft);
+  }
+
+  .result-title {
+    color: var(--accent);
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-meta {
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    font-family: monospace;
+  }
+
+  .result-type {
+    margin-right: 0.5rem;
+  }
+
+  .result-tags {
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    margin-top: 0.25rem;
+  }
+
+  .no-results {
+    padding: 1rem;
+    text-align: center;
+    color: var(--fg-muted);
+  }
+</style>

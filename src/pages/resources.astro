@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import resourcesData from '../data/resources.json';
+
+const { resources } = resourcesData;
+
+const sortedResources = [...resources].sort(
+  (a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+);
+---
+
+<BaseLayout title="Resources - synechism">
+  <h1>All Resources</h1>
+
+  <div class="filter-bar">
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="all">All ({resources.length})</button>
+      <button class="filter-btn" data-filter="bookmark">
+        Bookmarks ({resources.filter(r => r.type === 'bookmark').length})
+      </button>
+      <button class="filter-btn" data-filter="video">
+        Videos ({resources.filter(r => r.type === 'video').length})
+      </button>
+    </div>
+  </div>
+
+  {sortedResources.length > 0 ? (
+    <div class="resources-list" id="resources-list">
+      {sortedResources.map(resource => (
+        <div class="resource-wrapper" data-type={resource.type}>
+          <ResourceCard resource={resource} />
+        </div>
+      ))}
+    </div>
+  ) : (
+    <section class="empty-state">
+      <h2>No resources yet</h2>
+      <p>Start adding bookmarks and videos to populate this page.</p>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .resources-list {
+    max-width: 800px;
+  }
+
+  .resource-wrapper {
+    transition: opacity 0.2s ease;
+  }
+
+  .resource-wrapper.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const resourceItems = document.querySelectorAll('.resource-wrapper');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      resourceItems.forEach(item => {
+        const type = item.getAttribute('data-type');
+        if (filter === 'all' || type === filter) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
