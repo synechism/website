@@ -39,7 +39,7 @@ function formatDate(dateStr: string): string {
   )}
   <div class="resource-tags">
     {resource.tags.map((tag) => (
-      <a href={`/tags/${tag}`} class="resource-tag">{tag}</a>
+      <a href={`${import.meta.env.BASE_URL}/tags/${tag}`} class="resource-tag">{tag}</a>
     ))}
   </div>
 </article>

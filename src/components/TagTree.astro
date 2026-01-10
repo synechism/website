@@ -31,7 +31,7 @@ function hasChildren(tag: Tag): boolean {
 
     return (
       <li class="tag-item">
-        <a href={`/tags/${fullPath}`} class="tag-name">{tag.name}</a>
+        <a href={`${import.meta.env.BASE_URL}/tags/${fullPath}`} class="tag-name">{tag.name}</a>
         <span class="tag-count">({count})</span>
         {hasKids && (
           <span class="tag-expand" data-tag={fullPath}>[+]</span>

@@ -97,8 +97,8 @@ const hasTags = tags.length > 0;
   )}
 
   <footer class="footer-links">
-    <a href="/about">About this site</a>
-    <a href="/api/resources.json">Export as JSON</a>
+    <a href={`${import.meta.env.BASE_URL}/about`}>About this site</a>
+    <a href={`${import.meta.env.BASE_URL}/api/resources.json`}>Export as JSON</a>
   </footer>
 </BaseLayout>
 
