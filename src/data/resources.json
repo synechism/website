@@ -1,7 +1,7 @@
 {
   "meta": {
     "dateRange": "2026-01-01-ongoing",
-    "resourceCount": 4,
+    "resourceCount": 6,
     "tagCount": 4,
     "lastSync": "2026-01-09"
   },
@@ -41,6 +41,24 @@
       "dateAdded": "2026-01-09",
       "summary": "",
       "tags": ["ai/machine_learning", "cs/systems"]
+    },
+    {
+      "id": "5",
+      "title": "Visual Information Theory",
+      "type": "bookmark",
+      "url": "https://colah.github.io/posts/2015-09-Visual-Information/",
+      "dateAdded": "2026-01-10",
+      "summary": "",
+      "tags": ["mathematics"]
+    },
+    {
+      "id": "6",
+      "title": "Reinventing Explanation",
+      "type": "bookmark",
+      "url": "https://michaelnielsen.org/reinventing_explanation/",
+      "dateAdded": "2026-01-10",
+      "summary": "",
+      "tags": ["mathematics"]
     }
   ]
 }
