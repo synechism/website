@@ -1,7 +1,7 @@
 {
   "meta": {
     "dateRange": "2026-01-01-ongoing",
-    "resourceCount": 9,
+    "resourceCount": 10,
     "tagCount": 4,
     "lastSync": "2026-01-09"
   },
@@ -84,6 +84,15 @@
       "type": "bookmark",
       "url": "https://ericjmichaud.com/quanta/",
       "dateAdded": "2026-01-14",
+      "summary": "",
+      "tags": ["ai"]
+    },
+    {
+      "id": "10",
+      "title": "Shape Rotation 101: An Intro to Einsum and Jax Transformers",
+      "type": "bookmark",
+      "url": "https://sankalp.bearblog.dev/einsum-new/",
+      "dateAdded": "2026-02-03",
       "summary": "",
       "tags": ["ai"]
     }
