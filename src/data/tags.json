@@ -24,6 +24,10 @@
       ]
     },
     {
+      "name": "physics",
+      "children": []
+    },
+    {
       "name": "mathematics",
       "children": [
         { "name": "algebra", "children": [] },

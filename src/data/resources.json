@@ -1,8 +1,8 @@
 {
   "meta": {
     "dateRange": "2026-01-01-ongoing",
-    "resourceCount": 10,
-    "tagCount": 4,
+    "resourceCount": 12,
+    "tagCount": 5,
     "lastSync": "2026-01-09"
   },
   "resources": [
@@ -95,6 +95,24 @@
       "dateAdded": "2026-02-03",
       "summary": "",
       "tags": ["ai"]
+    },
+    {
+      "id": "11",
+      "title": "A beautiful loop: An active inference theory of consciousness",
+      "type": "paper",
+      "url": "https://pdf.sciencedirectassets.com/271127/1-s2.0-S0149763425X00087/1-s2.0-S0149763425002970/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQCV3R5N3956B1W1shiPsdwcYHTVAhxmdk5Au3vavKzMCAIgPfERWRZXY8%2ByH4lKxMGEKIRfnyl1ig14UVNVFmZb5mMqvAUIv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAFGgwwNTkwMDM1NDY4NjUiDA11DogoAEPrMbaffiqQBeOd%2BxDbMEcTV4vaeRx7sZiwh47PxMbiLWVzraPJMQqs2Dx3GfJMR3%2BHIfBUUeLfECQp4JIfiv%2FBJo%2FEQq73UZ1Yy1zHgyWcdDA7kIu1r20s2FI611K5GgUoqiaw3LFwL4fEgnrPw71K271L%2BsRhiBA2sYMO%2BcPcXDBmkTBn94SMtEXDgzsZgO3dRLAmHvmh1x8M%2Fp2bZWoHCdt0Fe%2FRx279WVgAldqu640YivnU%2Fe8lawRdzl9kMGIW6%2BeQdos06qwJdGN1QjN1PitbENreOkaHP94BGzqZojuPNJwFhVTV40CVjY5uERj3WjNob%2F9dL0ioekdJRqJXOCPlHPtmSPhcwqyxDQc9%2BcfgqbDTiryso7E2mg%2BLPS64AbUInKNWoMuhC98ZdB%2FfJ0w%2FP0NrLGbQ27gkWZrFKWDYSPxe1bgiKXhSb8XzbRMaFEIEt4o7MQPSJKBZM6qHKwcHnaGsWmJ%2BDJBLNf9jv%2FPBRYORtTKVKrxEXawyhtdl5lnxehapMNjkwXESsbD6PchQ48fSbs5YQvyr%2BvhLdwVlkdxPoYePFS0gVG7aoVuQhUKo1Hdyf%2FQdnNogCO7QsGD8rXJ6fXBjGYwn9%2F9ZbUpTaDX8YUUR3naQPPK%2FzLNMVdA1MKpdVKztKa0Ybl1Arbd0iURX%2FLlAiaTCyBIzPWP14oLAboE3zkq0H0MNR5WWTAMldW9kx%2BvXg6CkCJySlgyKjz%2FGPCPrjj36RASCzmr9a2IQbDS2mUC4DwzD4TMqodHUkYWgKSGbrVDo3Dwle%2BP7%2FdaIFrsAJdDq7LhIBxZ7ZomMZr3raV5zV4hW7Sjg7%2FZMPbg7yyvhJOotS78NX8xnmVmsh7LSYv%2BvP98FTrNHwVpaPhBdMNf82s0GOrEBluxZgLo5OIMP1yMNWGsL0MMXAbL4QySinQpuP0o5AvLDfLdBmS7oVlPNo305J34aFYqq5soNLYAsXW%2BdD5Aykh5bs4YRhZJOIKstskNb5UdgwOoukEz01hEONTiAf8ocZuzfx%2FiPVX4IzA2GNlrE%2F%2Bf%2BFsv0j9gEkgcqDwecQsdZXga553oMX%2FUpFFFbYpTSFo%2B3Zdq%2BA1shkqZQP3%2BaW6qxGROJPlvLz7R9E%2BAaNgPF&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260315T145453Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYQQHQWDOB%2F20260315%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=14a1782f2eb0bd18d57f8d386a984b8239a2101bbfb40c77bf235abded80f35e&hash=771e83987ea42c0cb5caae7f32bad08f72ff03e912565ac015f858588fe3f18f&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0149763425002970&tid=spdf-fbec0a52-1091-48d4-8d98-aa5dad20d28e&sid=b6bcce8f2556894ca46afa268ddc8baa435cgxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=0f165e0b010756025d5650&rr=9dcc5b217d80c13a&cc=us",
+      "dateAdded": "2026-03-15",
+      "summary": "",
+      "tags": ["biology/neuroscience"]
+    },
+    {
+      "id": "12",
+      "title": "Spacetime Bounds on Consciousness",
+      "type": "paper",
+      "url": "https://www.preprints.org/frontend/manuscript/fc292f95ea1cee680be51c9b8410b036/download_pub",
+      "dateAdded": "2026-03-15",
+      "summary": "",
+      "tags": ["physics"]
     }
   ]
 }
