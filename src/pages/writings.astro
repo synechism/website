@@ -1,17 +1,134 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const readings = [
+  { title: "The Inner Ring", author: "C.S. Lewis", url: "https://www.lewissociety.org/innerring/" },
+  { title: "A Modest Proposal", author: "Jonathan Swift", url: "https://www.gutenberg.org/files/1080/1080-h/1080-h.htm" },
+  { title: "Of Flying Cars and the Declining Rate of Profit", author: "David Graeber", url: "https://thebaffler.com/salvos/of-flying-cars-and-the-declining-rate-of-profit" },
+  { title: "Shipping Out", author: "David Foster Wallace", url: "https://harpers.org/wp-content/uploads/2008/09/HarpersMagazine-1996-01-0007859.pdf" },
+  { title: "Have You Ever Tried to Sell a Diamond?", author: "Edward Jay Epstein", url: "https://www.theatlantic.com/magazine/archive/1982/02/have-you-ever-tried-to-sell-a-diamond/304575/" },
+  { title: "Camping with President Theodore Roosevelt", author: "John Muir", url: "https://www.theatlantic.com/magazine/archive/1906/05/camping-with-president-theodore-roosevelt/307260/" },
+  { title: "Art Is for Seeing Evil", author: "Agnes Callard", url: "https://thepointmag.com/examined-life/art-is-for-seeing-evil/" },
+  { title: "Child's Play", author: "Sam Kriss", url: "https://harpers.org/archive/2026/03/childs-play-sam-kriss-ai-startup-roy-lee/" },
+  { title: "Scents and Sensibility", author: "Brian Eno", url: "http://music.hyperreal.org/artists/brian_eno/interviews/detail92.html" },
+  { title: "Status as a Service (StaaS)", author: "Eugene Wei", url: "https://www.eugenewei.com/blog/2019/2/19/status-as-a-service" },
+];
 ---
 
 <BaseLayout title="Writings - synechism">
   <h1>Writings</h1>
 
-  <section class="empty-state">
-    <p>No writings published yet. Check back later.</p>
+  <section class="own-writings">
+    <p class="coming-soon">nothing yet. working on it.</p>
+  </section>
+
+  <section class="readings-section">
+    <div class="readings-header">
+      <p class="readings-intro">
+        Assorted writings I enjoyed, on a variety of topics.
+        <span class="readings-tagline">For my sisyphean quest to develop a soul.</span>
+      </p>
+    </div>
+
+    <ol class="reading-list">
+      {readings.map((item, i) => (
+        <li>
+          <span class="reading-num">{String(i + 1).padStart(2, '0')}</span>
+          <a href={item.url} target="_blank" rel="noopener noreferrer" class="reading-title">{item.title}</a>
+          <span class="reading-author">{item.author}</span>
+        </li>
+      ))}
+    </ol>
   </section>
 </BaseLayout>
 
 <style>
   h1 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .own-writings {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--bg-card);
+  }
+
+  .coming-soon {
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+
+  .readings-header {
+    margin-bottom: 2rem;
+  }
+
+  .readings-intro {
+    font-size: 1.05rem;
+    color: var(--fg);
+    margin-bottom: 0;
+  }
+
+  .readings-tagline {
+    display: block;
+    color: var(--fg-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+  }
+
+  .reading-list {
+    list-style: none;
+    max-width: 800px;
+  }
+
+  .reading-list li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--bg-card);
+  }
+
+  .reading-list li:last-child {
+    border-bottom: none;
+  }
+
+  .reading-num {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    user-select: none;
+  }
+
+  .reading-title {
+    color: var(--fg);
+    font-size: 1rem;
+    transition: color 0.15s ease;
+    text-decoration: none;
+  }
+
+  .reading-title:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .reading-author {
+    font-variant: small-caps;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .reading-list li {
+      grid-template-columns: 2rem 1fr;
+    }
+
+    .reading-author {
+      grid-column: 2;
+      margin-top: -0.25rem;
+    }
   }
 </style>
