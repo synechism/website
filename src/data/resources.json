@@ -1,7 +1,7 @@
 {
   "meta": {
     "dateRange": "2026-01-01-ongoing",
-    "resourceCount": 12,
+    "resourceCount": 13,
     "tagCount": 5,
     "lastSync": "2026-01-09"
   },
@@ -113,6 +113,15 @@
       "dateAdded": "2026-03-15",
       "summary": "",
       "tags": ["physics"]
+    },
+    {
+      "id": "13",
+      "title": "FlexAttention: The Flexibility of PyTorch with the Performance of FlashAttention",
+      "type": "bookmark",
+      "url": "https://pytorch.org/blog/flexattention/",
+      "dateAdded": "2026-03-19",
+      "summary": "",
+      "tags": ["ai/machine_learning"]
     }
   ]
 }
