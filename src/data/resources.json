@@ -1,7 +1,7 @@
 {
   "meta": {
     "dateRange": "2026-01-01-ongoing",
-    "resourceCount": 13,
+    "resourceCount": 14,
     "tagCount": 5,
     "lastSync": "2026-01-09"
   },
@@ -113,6 +113,15 @@
       "dateAdded": "2026-03-15",
       "summary": "",
       "tags": ["physics"]
+    },
+    {
+      "id": "14",
+      "title": "Mathematics in Lean",
+      "type": "bookmark",
+      "url": "https://leanprover-community.github.io/mathematics_in_lean/mathematics_in_lean.pdf",
+      "dateAdded": "2026-03-19",
+      "summary": "",
+      "tags": ["mathematics", "cs/programming_languages"]
     },
     {
       "id": "13",
